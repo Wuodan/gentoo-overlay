@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 56534f3..b9d1e2a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -113,8 +113,8 @@ endif()
+ set(Uri_BUILD_TESTS OFF)
+ set(Uri_BUILD_DOCS OFF)
+ set(Uri_DISABLE_LIBCXX ON)
+-add_subdirectory(deps/uri)
+-include_directories(deps/uri/include)
++# add_subdirectory(deps/uri)
++# include_directories(deps/uri/include)
+ 
+ if (Boost_FOUND)
+     if (MSVC)
