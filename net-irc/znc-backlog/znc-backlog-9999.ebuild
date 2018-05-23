@@ -4,7 +4,7 @@
 EAPI=6
 inherit git-r3 multilib
 
-DESCRIPTION="The unofficial backlog module for the ZNC IRC-bouncer"
+DESCRIPTION="The inofficial backlog module for the ZNC IRC-bouncer"
 HOMEPAGE="https://github.com/FruitieX/znc-backlog"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/FruitieX/znc-backlog.git"
