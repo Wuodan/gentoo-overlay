@@ -1,0 +1,11 @@
+/var/log/kovri.log {
+        rotate 4
+        weekly
+        missingok
+        notifempty
+        create 640 kovri kovri
+        postrotate
+                /bin/kill -HUP $(cat /run/kovri/kovri.pid)
+        endscript
+}
+

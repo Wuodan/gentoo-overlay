@@ -1,0 +1,21 @@
+[Unit]
+Description=C++ daemon for accessing the I2P network
+After=network.target
+
+[Service]
+Type=forking
+Restart=on-abnormal
+PIDFile=/run/kovri/kovri.pid
+User=kovri
+Group=kovri
+LimitNOFILE=4096
+PermissionsStartOnly=yes
+ExecStartPre=/bin/mkdir -p /run/kovri
+ExecStartPre=/bin/chown kovri:kovri /run/kovri
+ExecStartPre=/bin/touch /run/kovri/kovri.pid /var/log/kovri.log
+ExecStartPre=/bin/chown kovri:kovri /run/kovri/kovri.pid /var/log/kovri.log
+ExecStart=/usr/bin/kovri --daemon --service --pidfile=/run/kovri/kovri.pid --log=file --logfile=/var/log/kovri.log --conf=/etc/kovri/kovri.conf --tunconf=/etc/kovri/tunnels.conf
+
+[Install]
+WantedBy=multi-user.target
+

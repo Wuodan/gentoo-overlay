@@ -1,0 +1,12 @@
+KOVRI_USER=kovri
+KOVRI_GROUP=kovri
+KOVRI_LOG=/var/log/kovri.log
+KOVRI_PID=/run/kovri/kovri.pid
+
+# max number of open files (for floodfill)
+rc_ulimit="-n 4096"
+
+# Options to kovri
+KOVRI_OPTIONS="--daemon --service --pidfile=${KOVRI_PID} \
+--log=file --logfile=${KOVRI_LOG} \
+--conf=/etc/kovri/kovri.conf --tunconf=/etc/kovri/tunnels.conf"

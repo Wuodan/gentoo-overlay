@@ -1,0 +1,47 @@
+From c0072bd42374ce181c3c99cb98a506244178bfb3 Mon Sep 17 00:00:00 2001
+From: Stefan Kuhn <stefan.kuhn.zurich@gmail.com>
+Date: Mon, 28 May 2018 22:31:58 +0200
+Subject: [PATCH] kovri-install.sh: moved catch(). Fixes #876
+
+---
+ pkg/installers/kovri-install.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/pkg/installers/kovri-install.sh b/pkg/installers/kovri-install.sh
+index bd5ae26d..7fdea0d0 100755
+--- a/pkg/installers/kovri-install.sh
++++ b/pkg/installers/kovri-install.sh
+@@ -47,6 +47,16 @@ PrintUsage()
+   echo -e "Create package with accompanying checksum file:\n\n$0 [-r \"client config kovri kovri-util\"] -p -c [-f /tmp/kovri-package.tar.bz2]\n\n"
+ }
+ 
++# Error handler
++catch()
++{
++  if [[ $? -ne 0 ]]; then
++    echo " ${red}[ERROR] Failed to install: '$1' ${normal}" >&2
++    exit 1
++  fi
++  echo " ${green}[OK]${normal}"
++}
++
+ # Path for binaries
+ bin_path=$HOME/bin
+ bins=(kovri kovri-util)
+@@ -332,16 +342,6 @@ if [[ $(tput colors) ]]; then
+   normal="$(tput sgr0)"
+ fi
+ 
+-# Error handler
+-catch()
+-{
+-  if [[ $? -ne 0 ]]; then
+-    echo " ${red}[ERROR] Failed to install: '$1' ${normal}" >&2
+-    exit 1
+-  fi
+-  echo " ${green}[OK]${normal}"
+-}
+-
+ echo "${yellow}The Kovri I2P Router Project (c) 2015-2017${normal}"
+ 
+ if [[ $package_option == true ]]; then
