@@ -9,85 +9,76 @@ HOMEPAGE="https://getkovri.org"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/monero-project/kovri.git"
 
-LICENSE="BSD-3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
-IUSE="vanilla static"
+IUSE=""
 
 # upstream uses dev-libs/crypto++-7.0
 # upstream uses dev-libs/cpp-netlib-0.13.x (release branch or rc1.tar.gz)
+# make target 'release-static' needs dev-libs/boost[static-libs]
+# make target 'release-static' needs openssl[static-libs]
 RDEPEND="
 	dev-libs/boost
-	dev-libs/openssl
-	!vanilla? (
-		>=dev-libs/cpp-netlib-0.13.0_rc1
-		>=dev-libs/crypto++-7
-	)"
+	dev-libs/openssl"
 DEPEND="${DEPEND}
-	dev-libs/cmake"
+	dev-util/cmake"
 
 KOVRI_USER=kovri
 KOVRI_GROUP=kovri
-
-DOCS=(
-	"${HOME}"/.kovri/config/kovri.conf
-	"${HOME}"/.kovri/config/tunnels.conf )
-PATCHES=(
-	"${FILESDIR}"/kovri-install_move_catch.patch
-	"${FILESDIR}"/kovri-install_utils_optional.patch )
+KOVRI_CONF_DIR=/etc/kovri
+KOVRI_DATA_DIR=/var/lib/kovri
+KOVRI_LOG_DIR=/var/log/kovri
 
 pkg_setup(){
 	enewgroup "${KOVRI_GROUP}"
 	enewuser "${KOVRI_USER}" -1 -1 /var/lib/run/kovri "${KOVRI_GROUP}"
-
-	if ! use vanilla ; then
-		PATCHES=(
-			${PATCHES[@]}
-			"${FILESDIR}/release_without_static_cryptopp.patch"
-		)
-	fi
 }
 
 src_compile(){
-	if use static; then
-		emake release-static || die "emake failed"
-	else
-		emake || die "emake failed"
-	fi
+	emake release || die "emake failed"
 }
 
 src_install() {
 	default
 
-	# lib
-	dolib.so build/libclient-connections.so.0
-
 	# bin
 	dobin "${HOME}/bin/${PN}"
-	# dobin "${HOME}/bin/${PN}-util"
+	dobin "${HOME}/bin/${PN}-util"
 	newbashcomp "${HOME}/bin/${PN}-bash.sh" ${PN}
-	
+
 	# config
-	insinto /etc/kovri
+	insinto ${KOVRI_CONF_DIR}
 	doins "${HOME}"/.kovri/config/kovri.conf
 	doins "${HOME}"/.kovri/config/tunnels.conf
 
 	# grant kovri group read and write access to config files
-	fowners "root:${KOVRI_GROUP}" \
-		/etc/kovri/kovri.conf \
-		/etc/kovri/tunnels.conf
+	fowners -R "root:${KOVRI_GROUP}"  ${KOVRI_CONF_DIR}
 	fperms 660 \
-		/etc/kovri/kovri.conf \
-		/etc/kovri/tunnels.conf
+		${KOVRI_CONF_DIR}/kovri.conf \
+		${KOVRI_CONF_DIR}/tunnels.conf
 
-	# working directory
-	keepdir /var/lib/kovri
-	insinto /var/lib/kovri
-	doins -r "${HOME}"/.kovri/client/*
-	fowners "${KOVRI_USER}:${KOVRI_GROUP}" /var/lib/kovri/
-	fperms 700 /var/lib/kovri/
+	# data directory
+	keepdir ${KOVRI_DATA_DIR}
+	insinto ${KOVRI_DATA_DIR}
+	doins -r "${HOME}"/.kovri/client
 
-	# add /var/lib/kovri/certificates to CONFIG_PROTECT
+	# log dir as symlink
+	keepdir ${KOVRI_LOG_DIR}
+	dosym ${EPREFIX}${KOVRI_LOG_DIR}/ ${EPREFIX}${KOVRI_DATA_DIR}/logs || die "dosym failed"
+
+	# set owner for kovri data-dir
+	# TODO: does not work recursive, why?
+	fowners -R "${KOVRI_USER}:${KOVRI_GROUP}" ${KOVRI_DATA_DIR}
+	fperms 700 ${KOVRI_DATA_DIR}
+
+	# set owner for kovri log dir
+	fowners "${KOVRI_USER}:${KOVRI_GROUP}" ${KOVRI_LOG_DIR}
+
+	# maybe symlink from original location to conf-paths?
+	# using --tunnelsconf and --kovriconf, on error, add the symlinks
+
+	# add ${KOVRI_DATA_DIR}/certificates and ${KOVRI_CONF_DIR} files to CONFIG_PROTECT
 	doenvd "${FILESDIR}/99kovri"
 
 	# openrc and systemd daemon routines

@@ -1,12 +1,16 @@
 KOVRI_USER=kovri
 KOVRI_GROUP=kovri
-KOVRI_LOG=/var/log/kovri.log
-KOVRI_PID=/run/kovri/kovri.pid
+KOVRI_CONF_DIR=/etc/kovri
+KOVRI_DATA_DIR=/var/lib/kovri
+KOVRI_LOG_DIR=/var/log/kovri
 
 # max number of open files (for floodfill)
 rc_ulimit="-n 4096"
 
 # Options to kovri
-KOVRI_OPTIONS="--daemon --service --pidfile=${KOVRI_PID} \
---log=file --logfile=${KOVRI_LOG} \
---conf=/etc/kovri/kovri.conf --tunconf=/etc/kovri/tunnels.conf"
+KOVRI_OPTIONS="\
+	--enable-daemon \
+	--data-dir=${KOVRI_DATA_DIR} \
+	--disable-console \
+	--kovriconf=${KOVRI_CONF_DIR}/kovri.conf \
+	--tunnelsconf=${KOVRI_CONF_DIR}/tunnels.conf"

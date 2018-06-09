@@ -2,16 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>kaikaikai@yandex.ru</email>
-		<name>Alexey Korepanov</name>
-	</maintainer>
-	<maintainer type="person">
-		<email>klondike@gentoo.org</email>
-		<name>Francisco Blas Izquierdo Riera</name>
-	</maintainer>
-	<maintainer type="person">
-		<email>blueness@gentoo.org</email>
-		<name>Anthony G. Basile</name>
+		<email>stefan.kuhn.zurich@gmail.com</email>
+		<name>Stefan Kuhn</name>
 	</maintainer>
 	<use>
 		<flag name="i2p-hardening">
@@ -22,6 +14,6 @@
 		</flag>
 	</use>
 	<upstream>
-		<remote-id type="github">PurpleI2P/i2pd</remote-id>
+		<remote-id type="github">monero/kovri</remote-id>
 	</upstream>
 </pkgmetadata>

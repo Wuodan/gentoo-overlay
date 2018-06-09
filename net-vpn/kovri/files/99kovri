@@ -1,1 +1,1 @@
-CONFIG_PROTECT="/var/lib/kovri/certificates"
+CONFIG_PROTECT="/etc/kovri /var/lib/kovri/client/certificates"

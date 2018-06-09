@@ -2,7 +2,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-description="C++ daemon for accessing the I2P network"
+description="A C++ daemon for monero and the i2p network"
 description_graceful="Graceful shutdown, takes 10 minutes"
 
 command="/usr/bin/kovri"
@@ -10,12 +10,9 @@ command_args="${KOVRI_OPTIONS}"
 user="${KOVRI_USER}:${KOVRI_GROUP}"
 start_stop_daemon_args="
     --user \"${user}\"
-    --pidfile \"${KOVRI_PID}\"
     --progress
 "
 retry="SIGTERM/20/SIGKILL/20"
-
-KOVRI_PID_DIR=$(dirname "${KOVRI_PID}")
 
 extra_started_commands="graceful"
 
@@ -26,15 +23,13 @@ depend() {
 start_pre() {
     if [ -z "${KOVRI_USER}" ] || \
        [ -z "${KOVRI_GROUP}" ] || \
-       [ -z "${KOVRI_PID}" ] || \
-       [ -z "${KOVRI_LOG}" ] || \
+       [ -z "${KOVRI_LOG_DIR}" ] || \
        [ -z "${KOVRI_OPTIONS}" ] ; then
-        eerror "Not all variables KOVRI_USER, KOVRI_GROUP, KOVRI_PID, KOVRI_OPTIONS, KOVRI_LOG are defined."
+        eerror "Not all variables KOVRI_USER, KOVRI_GROUP, KOVRI_LOG_DIR, KOVRI_OPTIONS are defined."
         eerror "Check your /etc/conf.d/kovri."
         return 1
     fi
-    checkpath -f -o "${user}" "${KOVRI_LOG}"
-    checkpath -d -m 0750 -o "${user}" "${KOVRI_PID_DIR}"
+    checkpath --directory --owner "${user}" "${KOVRI_LOG_DIR}"
 }
 
 graceful() {

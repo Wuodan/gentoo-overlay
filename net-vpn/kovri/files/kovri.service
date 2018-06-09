@@ -1,5 +1,5 @@
 [Unit]
-Description=C++ daemon for accessing the I2P network
+Description=A C++ daemon for monero and the i2p network
 After=network.target
 
 [Service]
@@ -12,9 +12,10 @@ LimitNOFILE=4096
 PermissionsStartOnly=yes
 ExecStartPre=/bin/mkdir -p /run/kovri
 ExecStartPre=/bin/chown kovri:kovri /run/kovri
-ExecStartPre=/bin/touch /run/kovri/kovri.pid /var/log/kovri.log
-ExecStartPre=/bin/chown kovri:kovri /run/kovri/kovri.pid /var/log/kovri.log
-ExecStart=/usr/bin/kovri --daemon --service --pidfile=/run/kovri/kovri.pid --log=file --logfile=/var/log/kovri.log --conf=/etc/kovri/kovri.conf --tunconf=/etc/kovri/tunnels.conf
+ExecStartPre=/bin/mkdir -p /var/log/kovri
+ExecStartPre=/bin/touch /run/kovri/kovri.pid
+ExecStartPre=/bin/chown kovri:kovri /run/kovri/kovri.pid /var/log/kovri
+ExecStart=/usr/bin/kovri --enable-daemon --data-dir=/var/lib/kovri --disable-console --kovriconf=/etc/kovri/kovri.conf --tunnelsconf=/etc/kovri/tunnels.conf
 
 [Install]
 WantedBy=multi-user.target
