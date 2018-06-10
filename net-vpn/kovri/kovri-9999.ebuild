@@ -20,8 +20,9 @@ IUSE=""
 # make target 'release-static' needs openssl[static-libs]
 RDEPEND="
 	dev-libs/boost
-	dev-libs/openssl"
-DEPEND="${DEPEND}
+	>=dev-libs/crypto++-7.0.0
+	dev-libs/openssl:="
+DEPEND="${RDEPEND}
 	dev-util/cmake"
 
 KOVRI_USER=kovri
@@ -33,10 +34,20 @@ KOVRI_LOG_DIR=/var/log/kovri
 pkg_setup(){
 	enewgroup "${KOVRI_GROUP}"
 	enewuser "${KOVRI_USER}" -1 -1 /var/lib/run/kovri "${KOVRI_GROUP}"
+
+	export CXX="$(tc-getCXX)"
+	export LIBDIR="${EPREFIX}/usr/$(get_libdir)"
+	export PREFIX="${EPREFIX}/usr"
+}
+
+src_prepare(){
+	default
+	# dev-libs/crypto++ is in dependencies, disable building it
+	sed -i 's/^release: release-deps$/release:/' Makefile || die "sed failed"
 }
 
 src_compile(){
-	emake release || die "emake failed"
+	emake release
 }
 
 src_install() {
@@ -64,7 +75,7 @@ src_install() {
 
 	# log dir as symlink
 	keepdir ${KOVRI_LOG_DIR}
-	dosym ${EPREFIX}${KOVRI_LOG_DIR}/ ${EPREFIX}${KOVRI_DATA_DIR}/logs || die "dosym failed"
+	dosym "${EPREFIX}${KOVRI_LOG_DIR}/" "${EPREFIX}${KOVRI_DATA_DIR}/logs"
 
 	# set owner for kovri data-dir
 	# TODO: does not work recursive, why?

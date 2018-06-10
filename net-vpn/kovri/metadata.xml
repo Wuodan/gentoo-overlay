@@ -5,14 +5,6 @@
 		<email>stefan.kuhn.zurich@gmail.com</email>
 		<name>Stefan Kuhn</name>
 	</maintainer>
-	<use>
-		<flag name="i2p-hardening">
-			Compile with hardening on vanilla compilers/linkers
-		</flag>
-		<flag name="websocket">
-			Enable websocket server
-		</flag>
-	</use>
 	<upstream>
 		<remote-id type="github">monero/kovri</remote-id>
 	</upstream>
