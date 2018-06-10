@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit bash-completion-r1 eutils git-r3 systemd user
+inherit bash-completion-r1 git-r3 systemd user
 
 DESCRIPTION="A C++ daemon for monero and the i2p network"
 HOMEPAGE="https://getkovri.org"
@@ -59,7 +59,6 @@ src_install() {
 		${KOVRI_CONF_DIR}/tunnels.conf
 
 	# data directory
-	keepdir ${KOVRI_DATA_DIR}
 	insinto ${KOVRI_DATA_DIR}
 	doins -r "${HOME}"/.kovri/client
 
