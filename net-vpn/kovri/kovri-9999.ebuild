@@ -20,7 +20,6 @@ IUSE=""
 # make target 'release-static' needs openssl[static-libs]
 RDEPEND="
 	dev-libs/boost
-	>=dev-libs/crypto++-7.0.0
 	dev-libs/openssl:="
 DEPEND="${RDEPEND}
 	dev-util/cmake"
@@ -34,12 +33,6 @@ KOVRI_LOG_DIR=/var/log/kovri
 pkg_setup(){
 	enewgroup "${KOVRI_GROUP}"
 	enewuser "${KOVRI_USER}" -1 -1 /var/lib/run/kovri "${KOVRI_GROUP}"
-}
-
-src_prepare(){
-	default
-	# dev-libs/crypto++ is in dependencies, disable building it
-	sed -i 's/^release: release-deps$/release:/' Makefile || die "sed failed"
 }
 
 src_compile(){
