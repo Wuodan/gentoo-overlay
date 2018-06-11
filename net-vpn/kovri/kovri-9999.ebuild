@@ -34,10 +34,6 @@ KOVRI_LOG_DIR=/var/log/kovri
 pkg_setup(){
 	enewgroup "${KOVRI_GROUP}"
 	enewuser "${KOVRI_USER}" -1 -1 /var/lib/run/kovri "${KOVRI_GROUP}"
-
-	export CXX="$(tc-getCXX)"
-	export LIBDIR="${EPREFIX}/usr/$(get_libdir)"
-	export PREFIX="${EPREFIX}/usr"
 }
 
 src_prepare(){
