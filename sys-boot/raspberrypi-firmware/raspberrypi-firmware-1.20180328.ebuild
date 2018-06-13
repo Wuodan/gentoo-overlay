@@ -11,7 +11,7 @@ SRC_URI="https://github.com/raspberrypi/firmware/archive/${PV}.tar.gz -> ${P}.ta
 
 LICENSE="GPL-2 raspberrypi-videocore-bin"
 SLOT="0"
-KEYWORDS="~arm -*"
+KEYWORDS="~arm ~arm64 -*"
 IUSE=""
 
 DEPEND=""
