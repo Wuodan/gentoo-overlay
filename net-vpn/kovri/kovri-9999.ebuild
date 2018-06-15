@@ -20,8 +20,10 @@ IUSE="static"
 # make target 'release-static' needs openssl[static-libs]
 RDEPEND="
 	dev-libs/boost
-	static? ( dev-libs/boost:0=[static-libs] ) !static? ( dev-libs/boost:= )
-	static? ( dev-libs/openssl:0=[static-libs,-zlib] ) !static? ( dev-libs/openssl:= )"
+	dev-libs/openssl:0=
+	static? (
+		dev-libs/boost:0=[static-libs]
+		dev-libs/openssl:0=[static-libs,-zlib] )"
 DEPEND="${RDEPEND}
 	dev-util/cmake"
 
