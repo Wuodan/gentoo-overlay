@@ -9,8 +9,9 @@ command="/usr/bin/kovri"
 command_args="${KOVRI_OPTIONS}"
 user="${KOVRI_USER}:${KOVRI_GROUP}"
 start_stop_daemon_args="
-    --user \"${user}\"
+    --pidfile \"${KOVRI_PID}\"
     --progress
+    --user \"${user}\"
 "
 retry="SIGTERM/20/SIGKILL/20"
 
@@ -23,9 +24,10 @@ depend() {
 start_pre() {
     if [ -z "${KOVRI_USER}" ] || \
        [ -z "${KOVRI_GROUP}" ] || \
+       [ -z "${KOVRI_PID}" ] || \
        [ -z "${KOVRI_LOG_DIR}" ] || \
        [ -z "${KOVRI_OPTIONS}" ] ; then
-        eerror "Not all variables KOVRI_USER, KOVRI_GROUP, KOVRI_LOG_DIR, KOVRI_OPTIONS are defined."
+        eerror "Not all variables KOVRI_USER, KOVRI_GROUP, KOVRI_PID, KOVRI_LOG_DIR, KOVRI_OPTIONS are defined."
         eerror "Check your /etc/conf.d/kovri."
         return 1
     fi
