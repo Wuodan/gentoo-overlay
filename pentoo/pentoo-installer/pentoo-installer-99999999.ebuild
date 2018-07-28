@@ -13,7 +13,7 @@ EGIT_BRANCH="headless"
 LICENSE="GPL-3"
 SLOT="0"
 if [[ "${PV}" == "99999999" ]] ; then
-	KEYWORDS=""
+	KEYWORDS="~amd64 ~x86"
 else
 	KEYWORDS="amd64 x86"
 	SRC_URI="https://dev.pentoo.ch/~zero/distfiles/${P}.tar.xz"
