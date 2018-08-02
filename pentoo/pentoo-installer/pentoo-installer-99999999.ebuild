@@ -13,6 +13,9 @@ EGIT_BRANCH="headless"
 LICENSE="GPL-3"
 SLOT="0"
 if [[ "${PV}" == "99999999" ]] ; then
+	# unmask until upstream makes up their mind, see
+	# https://github.com/pentoo/pentoo-overlay/issues/305
+	# KEYWORDS="~amd64 ~x86"
 	KEYWORDS="~amd64 ~x86"
 else
 	KEYWORDS="amd64 x86"
