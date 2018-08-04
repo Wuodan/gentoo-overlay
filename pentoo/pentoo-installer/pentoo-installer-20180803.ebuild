@@ -8,7 +8,7 @@ inherit git-r3
 DESCRIPTION="Installer for pentoo, based on the ncurses Arch Linux installer"
 HOMEPAGE="https://github.com/pentoo/pentoo-installer"
 EGIT_REPO_URI="https://github.com/wuodan/${PN}.git"
-EGIT_BRANCH="critical_fixes"
+EGIT_BRANCH="latest_fixes"
 
 LICENSE="GPL-3"
 SLOT="0"
