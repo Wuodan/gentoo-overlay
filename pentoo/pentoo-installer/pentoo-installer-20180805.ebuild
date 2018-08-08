@@ -27,7 +27,9 @@ PDEPEND="dev-util/dialog
 	app-crypt/pinentry[gtk,ncurses]
 	sys-fs/squashfs-tools
 	x11-misc/wmctrl
-	net-misc/rsync"
+	net-misc/rsync
+	app-misc/jq
+	sys-fs/growpart"
 #	X? ( x11-misc/xdialog )
 
 src_install() {
