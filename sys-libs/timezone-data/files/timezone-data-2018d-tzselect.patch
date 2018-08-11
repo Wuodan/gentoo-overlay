@@ -1,24 +1,5 @@
-From 1cd2cbdd4b148728e2b4bc3c085f0372c5e4f520 Mon Sep 17 00:00:00 2001
-From: Wuodan <stefan.kuhn.zurich@gmail.com>
-Date: Sat, 11 Aug 2018 11:56:00 +0200
-Subject: [PATCH] tzselect: User input/output through one function
-
-Which can be 'overriden' in the calling process as $SHOWDIALOG
-With this, tzselect can be used by other scripts with a customized
-user dialog. Better solutions are welcome!
-
-Example call:
-SHOWDIALOG=$PWD/tzselect_dialog tzselect
-
-where tzselect_dialog imitates the function showdialog() of tzselect.
----
- tzselect.ksh    | 135 ++++++++++++++++++++++++++++++------------------
- tzselect_dialog |  71 +++++++++++++++++++++++++
- 2 files changed, 156 insertions(+), 50 deletions(-)
- create mode 100755 tzselect_dialog
-
 diff --git a/tzselect.ksh b/tzselect.ksh
-index cde80d1b..bf268d1d 100644
+index cde80d1..7a38ccf 100644
 --- a/tzselect.ksh
 +++ b/tzselect.ksh
 @@ -36,6 +36,7 @@ REPORT_BUGS_TO=tz@iana.org
@@ -145,7 +126,7 @@ index cde80d1b..bf268d1d 100644
  		"coord - I want to use geographical coordinates." \
 -		"TZ - I want to specify the time zone using the Posix TZ format."
 -	    continent=$select_result
-+		"TZ - I want to specify the timezone using the Posix TZ format."
++		"TZ - I want to specify the timezone using the Posix TZ format."` || exit $?
  	    case $continent in
  	    Americas) continent=America;;
  	    *" "*) continent=`expr "$continent" : '\''\([^ ]*\)'\''`
@@ -279,80 +260,3 @@ index cde80d1b..bf268d1d 100644
  	case $ok in
  	Yes) break
  	esac
-diff --git a/tzselect_dialog b/tzselect_dialog
-new file mode 100755
-index 00000000..cd93313a
---- /dev/null
-+++ b/tzselect_dialog
-@@ -0,0 +1,71 @@
-+#!/bin/bash
-+# This script is released under the GNU General Public License 3.0
-+
-+# sample dialog handler for tzselect
-+# MUST have same input/output as the showdialog() function in tzselect
-+
-+# showdialog()
-+# All normal user input/output goes through this function
-+#
-+# The user dialog of this script can be altered by setting
-+# the SHOWDIALOG variable as in:
-+# SHOWDIALOG=$PWD/tzselect_dialog tzselect
-+# where 'tzselect_dialog' imitates this function
-+#
-+# Arguments:
-+#  Type: one of: menu, yesno, msgbox, inputbox
-+#  Message: text to display
-+#  Options: menu-options, only for types menu and yesno
-+
-+WHICHDIALOG=dialog
-+# let's support Xdialog for the fun of it
-+if [ ! $(type "Xdialog" &> /dev/null) ] && [ -v 'DISPLAY' ] && [ -n "${DISPLAY}" ]; then
-+	WHICHDIALOG=Xdialog
-+fi
-+
-+# get type and message first
-+TYPE="${1}"
-+shift
-+MSG="${1}"
-+shift
-+MENU_ITEMS=(0 0)
-+RET_DIALOG=
-+
-+case "${TYPE}" in
-+	# prepare arguments to dialog/Xdialog --menu
-+	menu)
-+		# add menu-height: auto
-+		MENU_ITEMS+=(0)
-+		# add value and description
-+		while [ $# -gt 0 ]; do
-+			MENU_ITEMS+=("$(( ( ${#MENU_ITEMS[@]} -1 ) / 2 ))" "${1}")
-+			shift
-+		done ;;
-+esac
-+
-+# use dialog/Xdialog
-+ANSWER=$("${WHICHDIALOG}" \
-+	--no-cancel \
-+	"--${TYPE}" \
-+	"${MSG}" \
-+	"${MENU_ITEMS[@]}" \
-+	3>&1 1>&2 2>&3)
-+RET_DIALOG=$?
-+
-+# exit on cancel unless it's a yesno
-+[ "${TYPE}" != 'yesno' ] && [ "${RET_DIALOG}" -ne 0 ] && exit "${RET_DIALOG}"
-+
-+case "${TYPE}" in
-+	yesno)
-+		if [ "${RET_DIALOG}" -eq 0 ]; then
-+			ANSWER=$([ -n "${1}" ] && echo -n "${1}" || echo -n Yes)
-+		else
-+			ANSWER=$([ -n "${2}" ] && echo -n "${2}" || echo -n No)
-+		fi ;;
-+	# get string from index
-+	menu)
-+		ANSWER="${MENU_ITEMS[(($ANSWER * 2 + 2))]}" || exit $? ;;
-+esac
-+# print result
-+echo -n "${ANSWER}"
-+exit 0
