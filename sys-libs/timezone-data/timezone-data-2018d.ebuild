@@ -21,13 +21,12 @@ DEPEND="nls? ( virtual/libintl )"
 RDEPEND="${DEPEND}
 	!sys-libs/glibc[vanilla(+)]"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-2018d-tzselect.patch"
-)
-
 S=${WORKDIR}
 
 src_prepare() {
+	eapply "${FILESDIR}/${PN}"-2018d-tzselect.patch
+	# sed -i -e 's#--abbrev=7#--abbrev=0#g' Makefile || die 'Sed failed!'
+	sed -Ei -e "s#^(VERSION=\s*)unknown\$#\1${PV}#g" Makefile || die 'Sed failed!'
 	default
 	tc-is-cross-compiler && cp -pR "${S}" "${S}"-native
 }
