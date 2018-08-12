@@ -14,7 +14,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE=""
+IUSE="doc"
 
 PDEPEND="dev-util/dialog
 	sys-apps/util-linux
@@ -32,11 +32,15 @@ PDEPEND="dev-util/dialog
 	sys-fs/growpart"
 #	X? ( x11-misc/xdialog )
 
+DOCS="config-samples"
+
 src_install() {
-	dodir /usr/
-	cp -R "${S}"/* "${ED}"/usr/ || die "Copy files failed"
+	dodir /usr/ /usr/share/
+	cp -R "${S}"/sbin "${ED}"/usr/ || die "Copy files failed"
+	cp -R "${S}"/share/pentoo-installer "${ED}"/usr/share/ || die "Copy files failed"
 	exeinto /root/Desktop/
 	doexe share/applications/pentoo-installer.desktop
 	exeinto /etc/skel/Desktop/
 	newexe share/applications/sudo-pentoo-installer.desktop pentoo-installer.desktop
+	use doc && einstalldocs
 }
