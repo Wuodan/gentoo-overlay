@@ -25,6 +25,6 @@ DEPEND="net-analyzer/pom-ng"
 RDEPEND="${DEPEND}"
 
 src_install() {
-	insinto /usr/local/share/pom-ng
-	doins -s *
+	insinto /usr/local/share/pom-ng/"${PN}"
+	doins -r *
 }
