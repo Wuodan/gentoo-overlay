@@ -22,12 +22,11 @@ xi_getTouchDeviceId() {
 # xinput: toggle touchpad on/off
 xi_toggletouchpad() {
 	# Get the xinput device number and enabling property for the touchpad
-	local xinputnum=$(getTouchDeviceId "SynPS/2 Synaptics TouchPad")
-	local enableprop="Synaptics Off"
+	local xinputnum=$(xi_getTouchDeviceId "SynPS/2 Synaptics TouchPad")
 	if [ -z "$xinputnum" ]; then
-		xinputnum=$(getTouchDeviceId "PS/2 Elantech Touchpad")
-		enableprop="Device Enabled"
+		xinputnum=$(xi_getTouchDeviceId "PS/2 Elantech Touchpad")
 	fi
+	local enableprop="Device Enabled"
 
 	# if we failed to get an input, exit
 	[ -z "$xinputnum" ] && exiterror

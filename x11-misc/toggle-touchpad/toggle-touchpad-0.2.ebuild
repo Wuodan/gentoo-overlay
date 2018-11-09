@@ -1,8 +1,7 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=4
+EAPI=7
 
 DESCRIPTION="Toggles touchpads on/off. Supports Synaptics and Elantech touchpads"
 HOMEPAGE="http://pentoo.ch"
