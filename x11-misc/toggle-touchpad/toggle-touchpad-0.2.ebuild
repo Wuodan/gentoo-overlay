@@ -19,7 +19,9 @@ RDEPEND="${DEPEND} || (
 	x11-apps/xinput	)"
 
 S="${WORKDIR}"
+
 src_prepare() {
+	default
 	cp ""${FILESDIR}/${PN} .
 }
 
