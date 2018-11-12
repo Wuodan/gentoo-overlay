@@ -1,3 +1,5 @@
 amd64           wuodan/hardened/linux/amd64                     stable
 amd64           wuodan/hardened/linux/amd64/binary              stable
 amd64           wuodan/hardened/linux/amd64/bleeding_edge       stable
+
+arm64           wuodan/default/linux/arm64                      dev
