@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit prefix
 
 DESCRIPTION="Toggles touchpads on/off. Supports Synaptics and Elantech touchpads"
 HOMEPAGE="https://github.com/wuodan/gentoo-overlay"
@@ -19,10 +20,11 @@ S="${WORKDIR}"
 
 src_prepare() {
 	default
-	cp ""${FILESDIR}/${PN} .
+	cp "${FILESDIR}/${PN}" .
 }
 
 src_install() {
 	exeinto /usr/bin
-	doexe "${PN}"
+	doexe "${FILESDIR}/${PN}"
+	eprefixify "${ED}/usr/bin/${PN}"
 }
