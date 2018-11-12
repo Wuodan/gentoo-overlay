@@ -1,0 +1,2 @@
+# required by app-portage/cpuid2cpuflags (argument)
+=app-portage/cpuid2cpuflags-5 ~arm64

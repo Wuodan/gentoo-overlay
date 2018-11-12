@@ -1,0 +1,2 @@
+ys-devel/distcc python_targets_python2_7
+>=dev-lang/python-exec-2.4.6 python_targets_python2_7

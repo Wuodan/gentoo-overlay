@@ -1,0 +1,5 @@
+# required by net-wireless/bluez (argument)
+=net-wireless/bluez-5.49-r1 ~arm64
+# required by net-wireless/bluez-5.49-r1::gentoo[obex]
+# required by net-wireless/bluez (argument)
+=dev-libs/libical-3.0.3 ~arm64
