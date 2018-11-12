@@ -1,0 +1,13 @@
+app-admin/sudo
+app-editors/vim
+app-eselect/eselect-repository
+app-misc/screen
+app-vim/config-wuodan
+app-portage/eix
+app-portage/gentoolkit
+app-portage/repoman
+net-misc/dhcpcd
+net-misc/openntpd
+sys-devel/distcc
+sys-fs/f2fs-tools
+sys-process/htop
