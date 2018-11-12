@@ -4,15 +4,12 @@
 EAPI=7
 
 DESCRIPTION="Toggles touchpads on/off. Supports Synaptics and Elantech touchpads"
-HOMEPAGE="http://pentoo.ch"
-SRC_URI=""
+HOMEPAGE="https://github.com/wuodan/gentoo-overlay"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-DEPEND=""
 # todo: find out what happens when both are installed
 RDEPEND="${DEPEND} || (
 	x11-drivers/xf86-input-synaptics
