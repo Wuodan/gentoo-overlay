@@ -1,1 +1,3 @@
+sys-boot/raspberrypi-firmware
 sys-devel/distcc
+sys-kernel/raspberrypi-sources
