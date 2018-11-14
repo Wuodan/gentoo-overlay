@@ -5,6 +5,7 @@ app-misc/screen
 app-vim/config-wuodan
 app-portage/eix
 app-portage/gentoolkit
+app-portage/layman
 app-portage/repoman
 net-misc/dhcpcd
 sys-fs/f2fs-tools
