@@ -1,18 +1,18 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit git-r3
 
+EGIT_REPO_URI="https://github.com/wuodan/${PN}.git"
+EGIT_BRANCH="save-config"
+
 DESCRIPTION="Installer for pentoo, based on the ncurses Arch Linux installer"
 HOMEPAGE="https://github.com/pentoo/pentoo-installer"
-EGIT_REPO_URI="https://github.com/wuodan/${PN}.git"
-EGIT_BRANCH="headless"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
 
 IUSE=""
 
@@ -27,14 +27,14 @@ PDEPEND="dev-util/dialog
 	app-crypt/pinentry[gtk,ncurses]
 	sys-fs/squashfs-tools
 	x11-misc/wmctrl
-	net-misc/rsync"
+	net-misc/rsync
+	app-misc/jq
+	sys-fs/growpart"
 #	X? ( x11-misc/xdialog )
 
 src_install() {
 	dodir /usr/
 	cp -R "${S}"/* "${ED}"/usr/ || die "Copy files failed"
-	exeinto /root/Desktop/
-	doexe share/applications/pentoo-installer.desktop
 	exeinto /etc/skel/Desktop/
 	newexe share/applications/sudo-pentoo-installer.desktop pentoo-installer.desktop
 }
