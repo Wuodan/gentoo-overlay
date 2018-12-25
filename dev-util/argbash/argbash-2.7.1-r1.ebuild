@@ -15,8 +15,15 @@ IUSE=""
 RDEPEND="	>=app-shells/bash-3.0
 			>=sys-devel/autoconf-2.63"
 
+S="${WORKDIR}/${P}/resources"
+
+src_prepare() {
+	default
+	 sed -Ei 's#m4dir=/\$\(PREFIXED_LIBDIR\)#m4dir=/\$(EROOT)usr/lib#' Makefile || die 'sed failed'
+}
+
 src_install() {
+	emake PREFIX="${D}/usr" install || die "emake install failed"
+	cd .. || die "'cd ..' failed"
 	einstalldocs
-	cd resources || die "'cd resources' failed"
-	emake PREFIX="${D}"/usr install
 }
