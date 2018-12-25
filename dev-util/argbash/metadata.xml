@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>stefan.kuhn.zurich@gmail.com</email>
+	</maintainer>
+	<longdescription lang="en">Argbash is not a parsing library, but it is rather a code generator that generates a bash library tailor-made for your script. It lets you to describe arguments your script should take and then, you can generate the bash parsing code.</longdescription>
+</pkgmetadata>
