@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ EAPI=7
 inherit git-r3
 
 EGIT_REPO_URI="https://github.com/wuodan/${PN}.git"
-EGIT_BRANCH="save-config"
+EGIT_BRANCH="enable_new_user_from_config_file"
 
 DESCRIPTION="Installer for pentoo, based on the ncurses Arch Linux installer"
 HOMEPAGE="https://github.com/pentoo/pentoo-installer"
@@ -17,10 +17,11 @@ SLOT="0"
 IUSE=""
 
 PDEPEND="dev-util/dialog
+	sys-apps/gptfdisk
 	sys-apps/util-linux
 	sys-block/parted
 	sys-boot/efibootmgr
-	sys-boot/grub:2[multislot(-),grub_platforms_efi-32,grub_platforms_efi-64]
+	sys-boot/grub:2[-multislot(-),grub_platforms_efi-32,grub_platforms_efi-64]
 	sys-boot/os-prober
 	sys-boot/shim
 	sys-boot/mokutil
