@@ -6,7 +6,7 @@ EAPI=7
 inherit git-r3
 
 EGIT_REPO_URI="https://github.com/wuodan/${PN}.git"
-EGIT_BRANCH="enable_new_user_from_config_file"
+EGIT_BRANCH="config_file_with_user_and_postInstallScript"
 
 DESCRIPTION="Installer for pentoo, based on the ncurses Arch Linux installer"
 HOMEPAGE="https://github.com/pentoo/pentoo-installer"
