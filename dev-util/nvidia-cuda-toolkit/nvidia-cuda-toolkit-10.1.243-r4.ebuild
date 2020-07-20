@@ -72,8 +72,10 @@ src_install() {
 	fi
 	einstalldocs
 
-	mv doc/man/man3/{,cuda-}deprecated.3 || die
-	doman doc/man/man*/*
+	if use doc; then
+		mv doc/man/man3/{,cuda-}deprecated.3 || die
+		doman doc/man/man*/*
+	fi
 
 	use debugger || remove+=( bin/cuda-gdb bin/cuda-gdbserver extras/Debugger share/gdb extras/cuda-gdb-${PV}.src.tar.gz )
 
