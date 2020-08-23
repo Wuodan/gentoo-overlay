@@ -32,6 +32,8 @@ src_unpack() {
 	eapply -s "${FILESDIR}/4004_zd1211rw-inject+dbi-fix-4.7ish.patch"
 	eapply -s "${FILESDIR}/4005_ipw2200-inject-4.7ish.patch"
 	eapply -s "${FILESDIR}/4400_logo_larry_the_cow.patch"
+	# see https://www.virtualbox.org/ticket/19644
+	eapply -s "${FILESDIR}/5.8.2-export-get_vm_area_caller-for-vbox.patch"
 	#experimental penpatches
 	if use pentoo-experimental; then
 		eapply -s "${FILESDIR}/4008_cfg80211-decouple-us-from-the-RTNL-exp-4.8.patch"
@@ -42,9 +44,9 @@ src_install() {
 	kernel-2_src_install
 	insinto /usr/share/${PN}
 	if use amd64; then
-		doins "${FILESDIR}"/config-amd64-${PV}
+		doins "${FILESDIR}"/config-amd64-${PVR}
 	elif use x86; then
-		doins "${FILESDIR}"/config-x86-${PV}
+		doins "${FILESDIR}"/config-x86-${PVR}
 	fi
 }
 

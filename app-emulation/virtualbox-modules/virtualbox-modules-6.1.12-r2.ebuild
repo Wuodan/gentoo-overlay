@@ -35,6 +35,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# see https://www.virtualbox.org/ticket/19644
+	eapply -s "${FILESDIR}"/fixes_for_mm_struct.patch
+	eapply -s "${FILESDIR}"/fixes_for_changes_in_cpu_tlbstate.patch
+	eapply -s "${FILESDIR}"/fixes_for_module_memory.patch
+
 	if use pax_kernel && kernel_is -ge 3 0 0 ; then
 		eapply -p0 "${FILESDIR}"/${PN}-5.2.8-pax-const.patch
 	fi
