@@ -1,8 +1,10 @@
 # Copyright 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-USE_RUBY="ruby25 ruby26 ruby27"
+EAPI=7
+# Drop ruby27: Many dependencies do not support it
+# USE_RUBY="ruby25 ruby26 ruby27"
+USE_RUBY="ruby25 ruby26"
 
 RUBY_FAKEGEM_EXTRADOC="CHANGELOG.md README.md"
 RUBY_FAKEGEM_GEMSPEC="vagrant.gemspec"
