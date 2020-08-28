@@ -37,7 +37,7 @@ ruby_add_rdepend "
 	>=dev-ruby/i18n-1.8:1 <dev-ruby/i18n-2:1
 	>=dev-ruby/listen-3.1 <dev-ruby/listen-4
 	>=dev-ruby/log4r-1.1.9 <dev-ruby/log4r-1.1.11
-	<dev-ruby/mime-types-3:*
+	>=dev-ruby/mime-0.4.4:* <dev-ruby/mime-0.5:*
 	=dev-ruby/net-ssh-6*:*
 	=dev-ruby/net-sftp-3*
 	=dev-ruby/net-scp-1.2*
